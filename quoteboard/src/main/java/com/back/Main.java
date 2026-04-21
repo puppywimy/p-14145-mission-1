@@ -21,6 +21,7 @@ public class Main {
                 System.out.print("작가 : ");
                 String author = sc.nextLine().strip();
                 System.out.println(index + "번 명언이 등록되었습니다.");
+                index++;
             }
         }
     }
