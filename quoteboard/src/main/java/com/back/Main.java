@@ -10,7 +10,15 @@ public class Main {
 
         while (true) {
             System.out.print("명언) ");
-            if (sc.nextLine().strip().equals("종료")) break;
+            String command = sc.nextLine().strip();
+
+            if (command.equals("종료")) break;
+            if (command.equals("등록")) {
+                System.out.print("명언 : ");
+                String quote = sc.nextLine().strip();
+                System.out.print("작가 : ");
+                String author = sc.nextLine().strip();
+            }
         }
     }
 }
