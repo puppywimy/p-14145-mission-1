@@ -1,5 +1,6 @@
 package com.back;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Quote {
@@ -34,8 +35,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        Quote[] quotes = new Quote[10 + 1];
-        int lastIndex = 0;
+        ArrayList<Quote> quotes = new ArrayList<>();
 
         while (true) {
             System.out.print("명언) ");
@@ -58,42 +58,47 @@ public class Main {
                 System.out.print("작가 : ");
                 String author = sc.nextLine().strip();
 
-                quotes[++lastIndex] = new Quote(content, author);
-                System.out.println(lastIndex + "번 명언이 등록되었습니다.");
+                quotes.add(new Quote(content, author));
+                System.out.println(quotes.size() + "번 명언이 등록되었습니다.");
             }
             if (command.equals("목록")) {
                 System.out.println("번호 / 작가 / 명언");
                 System.out.println("----------------------");
-                for (int i = lastIndex; i > 0; i--) {
-                    Quote currentQuote = quotes[i];
+                for (int i = quotes.size() - 1; i >= 0; i--) {
+                    Quote currentQuote = quotes.get(i);
 
                     if (currentQuote != null) {
-                        System.out.println(i + " / " + currentQuote.getAuthor() + " / " + currentQuote.getContent());
+                        System.out.println((i + 1) + " / " + currentQuote.getAuthor() + " / " + currentQuote.getContent());
                     }
                 }
             }
             if (command.equals("삭제")) {
-                if (id != -1) {
-                    if (quotes[id] == null) {
-                        System.out.println(id + "번 명언은 존재하지 않습니다.");
-                    } else {
-                        quotes[id] = null;
+                if (id > 0) {
+                    int index = id - 1;
+                    Quote selectedQuote = index < quotes.size() ? quotes.get(index) : null;
+                    boolean isQuotePresent = selectedQuote != null;
+                    if (isQuotePresent) {
+                        quotes.set(index, null);
                         System.out.println(id + "번 명언이 삭제되었습니다.");
+                    } else {
+                        System.out.println(id + "번 명언은 존재하지 않습니다.");
                     }
                 }
             }
             if (command.equals("수정")) {
-                if (id != -1) {
-                    Quote selectedQuote = quotes[id];
-                    if (selectedQuote == null) {
-                        System.out.println(id + "번 명언은 존재하지 않습니다.");
-                    } else {
+                if (id > 0) {
+                    int index = id - 1;
+                    Quote selectedQuote = index < quotes.size() ? quotes.get(index) : null;
+                    boolean isQuotePresent = selectedQuote != null;
+                    if (isQuotePresent) {
                         System.out.println("명언(기존) : " + selectedQuote.getContent());
                         System.out.print("명언 : ");
                         selectedQuote.setContent(sc.nextLine().strip());
                         System.out.println("작가(기존) : " + selectedQuote.getAuthor());
                         System.out.print("작가 : ");
                         selectedQuote.setAuthor(sc.nextLine().strip());
+                    } else {
+                        System.out.println(id + "번 명언은 존재하지 않습니다.");
                     }
                 }
             }
