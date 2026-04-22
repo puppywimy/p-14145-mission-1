@@ -15,8 +15,16 @@ class Quote {
         return this.content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getAuthor() {
         return this.author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
 
@@ -71,6 +79,21 @@ public class Main {
                     } else {
                         quotes[id] = null;
                         System.out.println(id + "번 명언이 삭제되었습니다.");
+                    }
+                }
+            }
+            if (command.equals("수정")) {
+                if (id != -1) {
+                    Quote selectedQuote = quotes[id];
+                    if (selectedQuote == null) {
+                        System.out.println(id + "번 명언은 존재하지 않습니다.");
+                    } else {
+                        System.out.println("명언(기존) : " + selectedQuote.getContent());
+                        System.out.print("명언 : ");
+                        selectedQuote.setContent(sc.nextLine().strip());
+                        System.out.println("작가(기존) : " + selectedQuote.getAuthor());
+                        System.out.print("작가 : ");
+                        selectedQuote.setAuthor(sc.nextLine().strip());
                     }
                 }
             }
