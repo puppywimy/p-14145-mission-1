@@ -31,7 +31,17 @@ public class Main {
 
         while (true) {
             System.out.print("명언) ");
-            String command = sc.nextLine().strip();
+            String input = sc.nextLine().strip();
+            String[] inputSlices = input.split("\\?id=");
+            String command = inputSlices[0];
+            int id = -1;
+            if (inputSlices.length > 1) {
+                try {
+                    id = Integer.parseInt(inputSlices[1]);
+                } catch (NumberFormatException exception) {
+                    //
+                }
+            }
 
             if (command.equals("종료")) break;
             if (command.equals("등록")) {
@@ -48,7 +58,20 @@ public class Main {
                 System.out.println("----------------------");
                 for (int i = lastIndex; i > 0; i--) {
                     Quote currentQuote = quotes[i];
-                    System.out.println(i + " / " + currentQuote.getAuthor() + " / " + currentQuote.getContent());
+
+                    if (currentQuote != null) {
+                        System.out.println(i + " / " + currentQuote.getAuthor() + " / " + currentQuote.getContent());
+                    }
+                }
+            }
+            if (command.equals("삭제")) {
+                if (id != -1) {
+                    if (quotes[id] == null) {
+                        System.out.println(id + "번 명언은 존재하지 않습니다.");
+                    } else {
+                        quotes[id] = null;
+                        System.out.println(id + "번 명언이 삭제되었습니다.");
+                    }
                 }
             }
         }
