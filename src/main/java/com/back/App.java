@@ -1,12 +1,12 @@
 package com.back;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 class App {
     private final Scanner scanner = new Scanner(System.in);
-    private int quotesArrayMaxSize = 100;
-    private Quote[] quotesArray = new Quote[quotesArrayMaxSize];
-    private int quotesArraySize = 0;
+    private final ArrayList<Quote> quotes = new ArrayList<>();
     private int lastId = 0;
 
     void run() {
@@ -37,7 +37,7 @@ class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        Quote[] quotes = list();
+        List<Quote> quotes = list();
 
         for (Quote quote : quotes) {
             System.out.printf("%d / %s / %s\n", quote.getId(), quote.getAuthor(), quote.getContent());
@@ -119,18 +119,13 @@ class App {
         update(id, newContent, newAuthor);
     }
 
-    private Quote[] list() {
-        Quote[] quotes = new Quote[quotesArraySize];
-        for (int i = 0; i < quotesArraySize; i++) {
-            quotes[i] = quotesArray[quotesArraySize - 1 - i];
-        }
-        return quotes;
+    private List<Quote> list() {
+        return quotes.reversed();
     }
 
     private Quote create(String content, String author) {
         Quote newQuote = new Quote(++lastId, content, author);
-        if (quotesArraySize >= quotesArrayMaxSize) growQuotesArray();
-        quotesArray[quotesArraySize++] = newQuote;
+        quotes.add(newQuote);
         return newQuote;
     }
 
@@ -138,14 +133,9 @@ class App {
         int index = findIndexById(id);
         if (index == -1) return -1;
 
-        int tempId = quotesArray[index].getId();
+        Quote removedQuote = quotes.remove(index);
 
-        for (int i = index; i < quotesArraySize - 1; i++) {
-            quotesArray[i] = quotesArray[i + 1];
-        }
-        quotesArray[--quotesArraySize] = null;
-
-        return tempId;
+        return removedQuote.getId();
     }
 
     private void update(int id, String newContent, String newAuthor) {
@@ -156,30 +146,18 @@ class App {
         selectedQuote.setAuthor(newAuthor);
     }
 
-    private void growQuotesArray() {
-        Quote[] newQuotesArray = new Quote[quotesArrayMaxSize * 2];
-        quotesArrayMaxSize *= 2;
-        for (int i = 0; i < quotesArraySize; i++) {
-            newQuotesArray[i] = quotesArray[i];
-        }
-        quotesArray = newQuotesArray;
-    }
-
     private int findIndexById(int id) {
-        if (quotesArraySize <= 0) return -1;
-
         int index = -1;
-        for (int i = 0; i < quotesArraySize; i++) {
-            if (quotesArray[i].getId() != id) continue;
+        for (int i = 0; i < quotes.size(); i++) {
+            if (quotes.get(i).getId() != id) continue;
             index = i;
             break;
         }
-
         return index;
     }
 
     private Quote findById(int id) {
         int index = findIndexById(id);
-        return index == -1 ? null : quotesArray[index];
+        return index == -1 ? null : quotes.get(index);
     }
 }
