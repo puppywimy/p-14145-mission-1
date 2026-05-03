@@ -25,8 +25,7 @@ class Rq {
     }
 
     String getParam(String key, String fallbackValue) {
-        String value = queryMap.get(key);
-        return value == null ? fallbackValue : value;
+        return queryMap.getOrDefault(key, fallbackValue);
     }
 
     int getParamAsInt(String key, int fallbackValue) {
