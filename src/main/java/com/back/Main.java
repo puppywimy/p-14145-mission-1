@@ -8,6 +8,8 @@ public class Main {
     }
 
     static void testRq() {
-        //
+        Rq rq = new Rq("삭제?id=1");
+        String actionName = rq.getActionName();
+        System.out.println(actionName);
     }
 }
