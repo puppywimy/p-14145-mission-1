@@ -14,21 +14,17 @@ class App {
 
         while (true) {
             System.out.print("명언) ");
-            String input = scanner.nextLine().strip();
+            Rq rq = new Rq(scanner.nextLine().strip());
 
-            String[] commandAndQueryString = input.split("\\?", 2);
-            String command = commandAndQueryString[0];
-            String queryString = commandAndQueryString.length > 1 ? commandAndQueryString[1] : "";
-
-            switch (command) {
+            switch (rq.getActionName()) {
                 case "종료" -> {
                     scanner.close();
                     return;
                 }
                 case "목록" -> actionList();
                 case "등록" -> actionCreate();
-                case "삭제" -> actionDelete(queryString);
-                case "수정" -> actionUpdate(queryString);
+                case "삭제" -> actionDelete(rq);
+                case "수정" -> actionUpdate(rq);
             }
         }
     }
@@ -55,20 +51,10 @@ class App {
         System.out.printf("%d번 명언이 등록되었습니다.\n", createdQuote.getId());
     }
 
-    private void actionDelete(String queryString) {
-        String[] keyAndValue = queryString.split("=", 2);
-        String key = keyAndValue[0];
-        String value = keyAndValue.length > 1 ? keyAndValue[1] : "";
-
-        if (!key.equals("id") || value.isBlank()) {
-            System.out.println("id를 입력해주세요.");
-            return;
-        }
-
-        int id = 0;
-        try {
-            id = Integer.parseInt(value);
-        } catch (NumberFormatException exception) {
+    private void actionDelete(Rq rq) {
+        int id = rq.getParamAsInt("id", 0);
+        if (id <= 0) {
+            System.out.println("id를 자연수로 입력해주세요.");
             return;
         }
 
@@ -82,20 +68,10 @@ class App {
         System.out.printf("%d번 명언이 삭제되었습니다.\n", deletedId);
     }
 
-    private void actionUpdate(String queryString) {
-        String[] keyAndValue = queryString.split("=", 2);
-        String key = keyAndValue[0];
-        String value = keyAndValue.length > 1 ? keyAndValue[1] : "";
-
-        if (!key.equals("id") || value.isBlank()) {
-            System.out.println("id를 입력해주세요.");
-            return;
-        }
-
-        int id = 0;
-        try {
-            id = Integer.parseInt(value);
-        } catch (NumberFormatException exception) {
+    private void actionUpdate(Rq rq) {
+        int id = rq.getParamAsInt("id", 0);
+        if (id <= 0) {
+            System.out.println("id를 자연수로 입력해주세요.");
             return;
         }
 
