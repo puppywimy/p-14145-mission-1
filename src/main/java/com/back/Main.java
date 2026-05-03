@@ -2,28 +2,28 @@ package com.back;
 
 public class Main {
     static void main() {
-//        App app = new App();
-//        app.run();
+        App app = new App();
+        app.run();
 
-        testRq0();
-        System.out.println();
-        testRq1();
-        System.out.println();
-        testRq2();
-        System.out.println();
-        testRq3();
-        System.out.println();
-        testRq4();
-        System.out.println();
-        testRq5();
-        System.out.println();
-        testRq6();
-        System.out.println();
-        testRq7();
-        System.out.println();
-        testRq8();
-        System.out.println();
-        testRq9();
+//        testRq0();
+//        System.out.println();
+//        testRq1();
+//        System.out.println();
+//        testRq2();
+//        System.out.println();
+//        testRq3();
+//        System.out.println();
+//        testRq4();
+//        System.out.println();
+//        testRq5();
+//        System.out.println();
+//        testRq6();
+//        System.out.println();
+//        testRq7();
+//        System.out.println();
+//        testRq8();
+//        System.out.println();
+//        testRq9();
     }
 
     private static void testRq0() {
