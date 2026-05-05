@@ -2,11 +2,11 @@ package com.back;
 
 import java.util.HashMap;
 
-class Rq {
+public class Rq {
     private final String actionName;
     private final HashMap<String, String> queryMap = new HashMap<>();
 
-    Rq(String url) {
+    public Rq(String url) {
         String[] actionNameAndQueriesString = url.split("\\?", 2);
         this.actionName = actionNameAndQueriesString[0];
         String queriesString = actionNameAndQueriesString.length > 1 ? actionNameAndQueriesString[1] : "";
@@ -20,15 +20,15 @@ class Rq {
         }
     }
 
-    String getActionName() {
+    public String getActionName() {
         return this.actionName;
     }
 
-    String getParam(String key, String fallbackValue) {
+    public String getParam(String key, String fallbackValue) {
         return queryMap.getOrDefault(key, fallbackValue);
     }
 
-    int getParamAsInt(String key, int fallbackValue) {
+    public int getParamAsInt(String key, int fallbackValue) {
         String value = getParam(key, "");
         if (value.isBlank()) return fallbackValue;
 

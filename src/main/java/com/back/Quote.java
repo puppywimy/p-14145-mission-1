@@ -1,6 +1,6 @@
 package com.back;
 
-class Quote {
+public class Quote {
     private final int id;
     private String content;
     private String author;
