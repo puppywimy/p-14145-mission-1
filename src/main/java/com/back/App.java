@@ -1,5 +1,7 @@
 package com.back;
 
+import com.back.domain.system.controller.SystemController;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
@@ -12,13 +14,15 @@ class App {
     void run() {
         System.out.println("== 명언 앱 ==");
 
+        SystemController systemController = new SystemController();
+
         while (true) {
             System.out.print("명언) ");
             Rq rq = new Rq(scanner.nextLine().strip());
 
             switch (rq.getActionName()) {
                 case "종료" -> {
-                    scanner.close();
+                    systemController.actionQuit(scanner);
                     return;
                 }
                 case "목록" -> actionList();
